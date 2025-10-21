@@ -1,0 +1,22 @@
+__pycache__/
+.ipynb_checkpoints/
+.vscode/
+
+# logs
+logs_debug/
+logs/
+
+# model weights
+pose_weights/
+
+# others
+*.npz
+*.npy
+*.pt
+*.pth
+*.ckpt
+
+
+
+
+

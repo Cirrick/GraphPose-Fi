@@ -106,7 +106,7 @@ if __name__ == '__main__':
         "pck@20": None,
         "pck@10": None,
     }
-    sum_pose, sum_bone, sum_total = 0.0, 0.0, 0.0
+
     for epoch in range(1, args.total_epoch+1):
         model.train()
         epoch_train_losses = []
@@ -125,13 +125,12 @@ if __name__ == '__main__':
             pose_gt = batch_data['output'].to(device)
             if args.experiment_name == 'graphposefi':
                 predicted_pose, _ = model(csi_data)
-            loss = torch.mean(torch.norm(predicted_pose-pose_gt, dim=-1))
-            sum_pose += float(loss.detach().cpu())
+            loss_mpjpe = torch.mean(torch.norm(predicted_pose-pose_gt, dim=-1))
             mpjpe, _, _, _ = calulate_error(predicted_pose.detach().cpu().numpy(), pose_gt.detach().cpu().numpy(), align=False)
             mpjpe_list += mpjpe.tolist()
-            losses.append(loss.item())
+            losses.append(loss_mpjpe.item())
 
-            loss = loss / steps_per_update
+            loss_mpjpe = loss_mpjpe / steps_per_update
             loss.backward()
             step_count += 1
 

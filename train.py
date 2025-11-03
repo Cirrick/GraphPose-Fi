@@ -127,14 +127,15 @@ if __name__ == '__main__':
                 predicted_pose, _ = model(csi_data)
             loss = torch.mean(torch.norm(predicted_pose-pose_gt, dim=-1))
             sum_pose += float(loss.detach().cpu())
-            mpjpe, _, _, _ = calulate_error(predicted_pose.data.cpu().numpy(), pose_gt.data.cpu().numpy(), align=False)
+            mpjpe, _, _, _ = calulate_error(predicted_pose.detach().cpu().numpy(), pose_gt.detach().cpu().numpy(), align=False)
             mpjpe_list += mpjpe.tolist()
-
-            loss.backward()
             losses.append(loss.item())
+
+            loss = loss / steps_per_update
+            loss.backward()
             step_count += 1
 
-            if step_count % steps_per_update == 0:
+            if (step_count % steps_per_update == 0) or (batch_idx + 1 == len(train_loader)):
                 torch.nn.utils.clip_grad_norm_( (p for p in model.parameters() if p.requires_grad), 1.0)
                 optim.step()
                 optim.zero_grad(set_to_none=True)
@@ -170,8 +171,8 @@ if __name__ == '__main__':
                 loss = torch.mean(torch.norm(predicted_val_pose-val_pose_gt, dim=-1))
                 # calculate the pck, mpjpe, pampjpe
                 for idx, percentage in enumerate([0.5, 0.4, 0.3, 0.2, 0.1]):
-                    pck_iter[idx].append(compute_pck_pckh(predicted_val_pose.permute(0,2,1).data.cpu().numpy(), val_pose_gt.permute(0,2,1).data.cpu().numpy(), percentage, align=False, dataset=config['dataset_name']))
-                mpjpe, pampjpe, mpjpe_joints, pampjpe_joints = calulate_error(predicted_val_pose.data.cpu().numpy(), val_pose_gt.data.cpu().numpy(), align=False)
+                    pck_iter[idx].append(compute_pck_pckh(predicted_val_pose.permute(0,2,1).detach().cpu().numpy(), val_pose_gt.permute(0,2,1).detach().cpu().numpy(), percentage, align=False, dataset=config['dataset_name']))
+                mpjpe, pampjpe, mpjpe_joints, pampjpe_joints = calulate_error(predicted_val_pose.detach().cpu().numpy(), val_pose_gt.detach().cpu().numpy(), align=False)
                 mpjpe_list += mpjpe.tolist()
                 pampjpe_list += pampjpe.tolist()
                 losses.append(loss.item())

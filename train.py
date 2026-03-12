@@ -131,7 +131,7 @@ if __name__ == '__main__':
             losses.append(loss_mpjpe.item())
 
             loss_mpjpe = loss_mpjpe / steps_per_update
-            loss.backward()
+            loss_mpjpe.backward()
             step_count += 1
 
             if (step_count % steps_per_update == 0) or (batch_idx + 1 == len(train_loader)):

@@ -24,3 +24,16 @@ $ python train.py --config_file config/mmfi/pose_config_p1s1.yaml --learning_rat
 ## Acknowledgements
 The implementation of this repo is based on [DT-Pose](https://github.com/cseeyangchen/DT-Pose) and [GraFormer](https://github.com/Graformer/GraFormer). Thanks them for releasing the codes.
 
+## Citation
+
+If you find our work useful, please cite:
+
+```bibtex
+@article{chen2025graph,
+  title   = {Graph-based 3D Human Pose Estimation using WiFi Signals},
+  author  = {Chen, Jichao and Qu, YangYang and Tang, Ruibo and Slock, Dirk},
+  journal = {arXiv preprint arXiv:2511.19105},
+  year    = {2025}
+}
+
+

@@ -29,11 +29,13 @@ The implementation of this repo is based on [DT-Pose](https://github.com/cseeyan
 If you find our work useful, please cite:
 
 ```bibtex
-@article{chen2025graph,
-  title   = {Graph-based 3D Human Pose Estimation using WiFi Signals},
-  author  = {Chen, Jichao and Qu, YangYang and Tang, Ruibo and Slock, Dirk},
-  journal = {arXiv preprint arXiv:2511.19105},
-  year    = {2025}
+@inproceedings{chen2026graph,
+  title={Graph-Based 3d Human Pose Estimation Using Wifi Signals},
+  author={Chen, Jichao and Qu, YangYang and Tang, Ruibo and Slock, Dirk},
+  booktitle={ICASSP 2026-2026 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  pages={19992--19996},
+  year={2026},
+  organization={IEEE}
 }
 
 
